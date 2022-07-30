@@ -62,10 +62,10 @@ def start(update, context):
 Welcome to Zendaya mirror leech bot!
 Type /{BotCommands.HelpCommand} to get a list of available commands
 '''
-        update.effective_message.reply_photo("https://mega.nz/file/8FNgwQrT#_8dWtxCExNvKnkQLzz8c_V3qwX1JCYzC49IQcCWyj1g", parse_mode=ParseMode.MARKDOWN)
+        update.effective_message.reply_photo("", parse_mode=ParseMode.MARKDOWN)
         sendMarkup(start_string, context.bot, update.message, reply_markup)
     else:
-        sendMarkup('Sorry, You cannot use me', context.bot, update.message, reply_markup)
+        sendMarkup('Sorry, You are not authorized', context.bot, update.message, reply_markup)
 
 def restart(update, context):
     restart_message = sendMessage("Restarting...", context.bot, update.message)
@@ -187,7 +187,7 @@ help_string = f'''
 
 def bot_help(update, context):
     button = ButtonMaker()
-    button.buildbutton("Other Commands", f"https://telegra.ph/{help}")
+    button.buildbutton("Zendaya ot Other Commands", f"https://telegra.ph/{help}")
     reply_markup = InlineKeyboardMarkup(button.build_menu(1))
     sendMarkup(help_string, context.bot, update.message, reply_markup)
 
@@ -235,9 +235,9 @@ def main():
                 if ospath.isfile(".restartmsg"):
                     with open(".restartmsg") as f:
                         chat_id, msg_id = map(int, f)
-                    msg = '✔️Restarted successfully!'
+                    msg = 'Restarted successfully!'
                 else:
-                    msg = '✔️Bot Restarted!'
+                    msg = 'Bot Restarted!'
                 for tag, links in data.items():
                      msg += f"\n\n{tag}: "
                      for index, link in enumerate(links, start=1):

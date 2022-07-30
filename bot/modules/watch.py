@@ -43,9 +43,9 @@ def _watch(bot, message, isZip=False, isLeech=False, multi=0):
             b_uname = bot_d.username
             uname = f'<a href="tg://user?id={message.from_user.id}">{message.from_user.first_name}</a>'
             botstart = f"http://t.me/{b_uname}"
-            buttons.buildbutton("➦Click Here to Start Me", f"{botstart}")
-            startwarn = f"Dear {uname},\n\n<b>I found that you haven't started me in PM (Private Chat) yet.</b>\n\n" \
-                        f"From now on i will give link and leeched files in PM and log channel only"
+            buttons.buildbutton("Click Here to Start Me", f"{botstart}")
+            startwarn = f"Dear {uname},\n\n<b>I found that you haven't started the bot in PM (Private Chat) yet.</b>\n\n" \
+                        f"From now on I will give link and leeched files in PM and log channel only"
             message = sendMarkup(startwarn, bot, message, InlineKeyboardMarkup(buttons.build_menu(2)))
             Thread(target=auto_delete_message, args=(bot, message, message)).start()
             return
@@ -111,9 +111,9 @@ def _watch(bot, message, isZip=False, isLeech=False, multi=0):
             user = bot.get_chat_member(CHAT_ID, message.from_user.id)
             if user.status not in ['creator', 'administrator']:
                 bot.restrict_chat_member(chat_id=message.chat.id, user_id=message.from_user.id, until_date=int(time()) + 30, permissions=ChatPermissions(can_send_messages=False))
-                return sendMessage(f"Dear {uname}️,\n\n<b>You are MUTED until you learn how to use me.\n\nWatch others or read </b>/{BotCommands.HelpCommand}", bot, message)
+                return sendMessage(f"Dear {uname}️,\n\n<b>You are MUTED until you learn how to use the bot.\n\nWatch others or read </b>/{BotCommands.HelpCommand}", bot, message)
             else:
-                return sendMessage(f"OMG, {uname} You are a <b>Admin.</b>\n\nStill don't know how to use me!\n\nPlease read /{BotCommands.HelpCommand}", bot, message)
+                return sendMessage(f"OMG, {uname} You are a <b>Admin.</b>\n\nStill don't know how to use the bot!\n\nPlease read /{BotCommands.HelpCommand}", bot, message)
         except Exception as e:
             print(f'[MuteUser] Error: {type(e)} {e}')
         return

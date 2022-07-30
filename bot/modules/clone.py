@@ -26,7 +26,7 @@ def _clone(message, bot, multi=0):
             if user.status not in ['member', 'creator', 'administrator']:
                 buttons.buildbutton(f"{TITLE_NAME}", f"https://t.me/{CHANNEL_USERNAME}")
                 reply_markup = InlineKeyboardMarkup(buttons.build_menu(1))
-                return sendMarkup(f"<b>Dear {uname}️,\n\nI found that you haven't joined our Updates Channel yet.\n\nJoin and Use Bots Without Restrictions.</b>", bot, message, reply_markup)
+                return sendMarkup(f"<b>Dear {uname}️,\n\nI found that you haven't joined our Updates Channel yet.\n\nJoin and Use the Bot Without Restrictions.</b>", bot, message, reply_markup)
         except Exception as e:
             LOGGER.info(str(e))
 
@@ -41,8 +41,8 @@ def _clone(message, bot, multi=0):
             b_uname = bot_d.username
             uname = f'<a href="tg://user?id={message.from_user.id}">{message.from_user.first_name}</a>'
             botstart = f"http://t.me/{b_uname}"
-            buttons.buildbutton("➦Click Here to Start Me", f"{botstart}")
-            startwarn = f"Dear {uname},\n\n<b>I found that you haven't started me in PM (Private Chat) yet.</b>\n\nFrom now on i will give link and leeched files in PM and log channel only"
+            buttons.buildbutton("Click Here to Start Me", f"{botstart}")
+            startwarn = f"Dear {uname},\n\n<b>I found that you haven't started me in PM (Private Chat) yet.</b>\n\nFrom now on I will give link and leeched files in PM and log channel only"
             message = sendMarkup(startwarn, bot, message, InlineKeyboardMarkup(buttons.build_menu(2)))
             Thread(target=auto_delete_message, args=(bot, message, message)).start()
             return
@@ -102,7 +102,7 @@ def _clone(message, bot, multi=0):
             LOGGER.info('Checking File/Folder if already in Drive...')
             smsg, button = gd.drive_list(name, True, True)
             if smsg:
-                msg3 = "➦ Already available !\n➦ Drive you go:"
+                msg3 = "Already available !\n➦ Drive you go:"
                 return sendMarkup(msg3, bot, message, button)
         if CLONE_LIMIT is not None:
             LOGGER.info('Checking File/Folder Size...')
@@ -141,7 +141,7 @@ def _clone(message, bot, multi=0):
                     update_all_messages()
             except IndexError:
                 pass
-        cc = f'\n\n<b>➦ User </b>{tag}<b> ➦ Your file successfully...</b>\n\n<b>➦ Repo-By ✤ <i>{TITLE_NAME}</i></b>'
+        cc = f'\n\n<b>User </b>{tag}<b>Your file successfully uploaded...</b>\n\n<b>Owner: <i>{CHANNEL_USERNAME}</i></b>'
         if button in ["cancelled", ""]:
             sendMessage(f"{tag} {result}", bot, message)
         else:
@@ -155,9 +155,9 @@ def _clone(message, bot, multi=0):
             user = bot.get_chat_member(CHAT_ID, message.from_user.id)
             if user.status not in ['creator', 'administrator']:
                 bot.restrict_chat_member(chat_id=message.chat.id, user_id=message.from_user.id, until_date=int(time()) + 30, permissions=ChatPermissions(can_send_messages=False))
-                return sendMessage(f"Dear {uname}️,\n\n<b>You are MUTED until you learn how to use me.\n\nWatch others or read </b>/{BotCommands.HelpCommand}", bot, message)
+                return sendMessage(f"Dear {uname}️,\n\n<b>You are MUTED until you learn how to use the bot.\n\nWatch others or read </b>/{BotCommands.HelpCommand}", bot, message)
             else:
-                return sendMessage(f"OMG, {uname} You are a <b>Admin.</b>\n\nStill don't know how to use me!\n\nPlease read /{BotCommands.HelpCommand}", bot, message)
+                return sendMessage(f"OMG, {uname} You are a <b>Admin.</b>\n\nStill don't know how to use the bot!\n\nPlease read /{BotCommands.HelpCommand}", bot, message)
         except Exception as e:
             print(f'[MuteUser] Error: {type(e)} {e}')
 

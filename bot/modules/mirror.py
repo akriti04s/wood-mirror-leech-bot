@@ -217,23 +217,23 @@ class MirrorListener:
         reply_to = self.message.reply_to_message
         if not self.isPrivate and INCOMPLETE_TASK_NOTIFIER and DB_URI is not None:
             DbManger().rm_complete_task(self.message.link)
-        msg = f"<b>➦ File Name: </b><code>{escape(name)}</code>\n<b>➦ File Size: </b>{size}"
+        msg = f"<b>File Name:</b><code>{escape(name)}</code>\n<b>File Size:</b>{size}"
         if self.isLeech:
             if BOT_PM:	
                 bot_d = bot.get_me()	
                 b_uname = bot_d.username	
                 botstart = f"http://t.me/{b_uname}"	
-                buttons.buildbutton("View file in PM", f"{botstart}")
-            msg += f'\n<b>➦ Total Files: </b>{folders}'
+                buttons.buildbutton("View file in PM!", f"{botstart}")
+            msg += f'\n<b>Total Files: </b>{folders}'
             if typ != 0:
-                msg += f'\n<b>➦ Corrupted Files: </b>{typ}'
-            msg += f'\n\n<b>➦ User </b>{self.tag} <b>➦ Your file successfully...</b>'
-            msg += f'\n<b>➦ It Tooks:</b> {get_readable_time(time() - self.message.date.timestamp())}'
-            msg += f'\n\n<b>➦ Repo-By ✤ {TITLE_NAME}</b>'
+                msg += f'\n<b>Corrupted Files: </b>{typ}'
+            msg += f'\n\n<b>User </b>{self.tag} <b>Your files are successfully...</b>'
+            msg += f'\n<b>Time taken:</b> {get_readable_time(time() - self.message.date.timestamp())}'
+            msg += f'\n\n<b>Owner:{CHANNEL_USERNAME}</b>'
             if not files:
                 sendMessage(msg, self.bot, self.message)
             else:
-                fmsg = '\n<b>➦ Your Files Are:</b>'
+                fmsg = '\n<b>Your Files Are:</b>'
                 for index, (link, name) in enumerate(files.items(), start=1):
                     fmsg += f"{index}. <a href='{link}'>{name}</a>\n"
                     if len(fmsg.encode() + msg.encode()) > 4000:
@@ -243,13 +243,13 @@ class MirrorListener:
                 if fmsg != '':
                     sendMessage(msg + fmsg, self.bot, self.message)
         else:
-            msg += f'\n<b>➦ Type: </b>{typ}'
+            msg += f'\n<b>Type:</b>{typ}'
             if ospath.isdir(f'{DOWNLOAD_DIR}{self.uid}/{name}'):
-                msg += f'\n<b>➦ SubFolders: </b>{folders}'
-                msg += f'\n<b>➦ Files: </b>{files}'
-            msg += f'\n\n<b>➦ User </b>{self.tag} <b>➦ Your file successfully...</b>'
-            msg += f'\n<b>➦ It Tooks:</b> {get_readable_time(time() - self.message.date.timestamp())}'
-            msg += f'\n\n<b>➦ Repo-By ✤ {TITLE_NAME}</b>'
+                msg += f'\n<b>SubFolders:</b>{folders}'
+                msg += f'\n<b>Files:</b>{files}'
+            msg += f'\n\n<b>User </b>{self.tag} <b>➦ Your files are successfully...</b>'
+            msg += f'\n<b>Time taken:</b> {get_readable_time(time() - self.message.date.timestamp())}'
+            msg += f'\n\n<b>Owner:{CHANNEL_USERNAME}</b>'
             buttons = ButtonMaker()
             link = short_url(link)
             buttons.buildbutton("🌼 Drive Link 🌼", link)
@@ -260,14 +260,14 @@ class MirrorListener:
                 if ospath.isdir(f'{DOWNLOAD_DIR}/{self.uid}/{name}'):
                     share_url += '/'
                     share_url = short_url(share_url)
-                    buttons.buildbutton("🍁 Index Link 🍁", share_url)
+                    buttons.buildbutton("Index Link", share_url)
                 else:
                     share_url = short_url(share_url)
-                    buttons.buildbutton("🍁 Index Link 🍁", share_url)
+                    buttons.buildbutton("Index Link", share_url)
                     if VIEW_LINK:
                         share_urls = f'{INDEX_URL}/{url_path}?a=view'
                         share_urls = short_url(share_urls)
-                        buttons.buildbutton("🌼 View Link 🌼", share_urls)
+                        buttons.buildbutton("View Link", share_urls)
             if BUTTON_FOUR_NAME is not None and BUTTON_FOUR_URL is not None:
                 buttons.buildbutton(f"{BUTTON_FOUR_NAME}", f"{BUTTON_FOUR_URL}")
             if BUTTON_FIVE_NAME is not None and BUTTON_FIVE_URL is not None:
@@ -344,7 +344,7 @@ def _mirror(bot, message, isZip=False, extract=False, isQbit=False, isLeech=Fals
 
     if BOT_PM and message.chat.type != 'private':
         try:
-            msg1 = f'Added your Requested link to Download !\nWill send here once done.'
+            msg1 = f'Added your Requested link to Download!\nWill send here once done ASAP.'
             send = bot.sendMessage(message.from_user.id, text=msg1)
         except Exception as e:
             LOGGER.warning(e)
@@ -352,9 +352,9 @@ def _mirror(bot, message, isZip=False, extract=False, isQbit=False, isLeech=Fals
             b_uname = bot_d.username
             uname = f'<a href="tg://user?id={message.from_user.id}">{message.from_user.first_name}</a>'
             botstart = f"http://t.me/{b_uname}"
-            buttons.buildbutton("➦Click Here to Start Me", f"{botstart}")
+            buttons.buildbutton("Click Here to Start Me", f"{botstart}")
             startwarn = f"Dear {uname},\n\n<b>I found that you haven't started me in PM (Private Chat) yet.</b>\n\n" \
-                        f"From now on i will give link and leeched files in PM and log channel only"
+                        f"From now on I will give link and leeched files in PM and log channel only"
             message = sendMarkup(startwarn, bot, message, InlineKeyboardMarkup(buttons.build_menu(2)))
             Thread(target=auto_delete_message, args=(bot, message, message)).start()
             return
@@ -509,7 +509,7 @@ def _mirror(bot, message, isZip=False, extract=False, isQbit=False, isLeech=Fals
                 user = bot.get_chat_member(CHAT_ID, message.from_user.id)
                 if user.status not in ['creator', 'administrator']:
                     bot.restrict_chat_member(chat_id=message.chat.id, user_id=message.from_user.id, until_date=int(time()) + 30, permissions=ChatPermissions(can_send_messages=False))
-                    return sendMessage(f"Dear {uname}️,\n\n<b>You are MUTED until you learn how to use me.\n\nWatch others or read </b>/{BotCommands.HelpCommand}", bot, message)
+                    return sendMessage(f"Dear {uname}️,\n\n<b>You are MUTED until you learn how to use the bot.\n\nWatch others or read </b>/{BotCommands.HelpCommand}", bot, message)
                 else:
                     return sendMessage(f"OMG, {uname} You are a <b>Admin.</b>\n\nStill don't know how to use me!\n\nPlease read /{BotCommands.HelpCommand}", bot, message)
             except Exception as e:

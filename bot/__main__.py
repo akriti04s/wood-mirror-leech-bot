@@ -68,7 +68,7 @@ Type /{BotCommands.HelpCommand} to get a list of available commands
         sendMarkup('Sorry, You cannot use me', context.bot, update.message, reply_markup)
 
 def restart(update, context):
-    restart_message = sendMessage("Restarting...", context.bot, update.message)
+    restart_message = sendMessage("Restarting....", context.bot, update.message)
     if Interval:
         Interval.clear()
     clean_all()
